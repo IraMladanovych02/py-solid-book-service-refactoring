@@ -21,10 +21,16 @@ class Book:
         print(f"{prefix}{content}")
 
     def print_book(self, print_type: str) -> None:
-        self.display(print_type, prefix=f"Printing the book: {self.title}...\n")
+        self.display(
+            print_type,
+            prefix=f"Printing the book: {self.title}...\n"
+        )
 
     def _serialize_to_json(self) -> str:
-        return json.dumps({"title": self.title, "content": self.content})
+        return json.dumps(
+            {"title": self.title,
+             "content": self.content}
+        )
 
     def _serialize_to_xml(self) -> str:
         root = ET.Element("book")
@@ -40,12 +46,17 @@ class Book:
             "xml": self._serialize_to_xml
         }
         if serialize_type not in serializers:
-            raise ValueError(f"Unknown serialize type: {serialize_type}")
+            raise ValueError(
+                f"Unknown serialize type: {serialize_type}"
+            )
 
         return serializers[serialize_type]()
 
 
-def main(book: Book, commands: List[Tuple[str, str]]) -> Optional[str]:
+def main(
+        book: Book,
+        commands: List[Tuple[str, str]]
+) -> Optional[str]:
     actions = {
         "display": book.display,
         "print": book.print_book,
@@ -66,5 +77,12 @@ def main(book: Book, commands: List[Tuple[str, str]]) -> Optional[str]:
 
 
 if __name__ == "__main__":
-    sample_book = Book("Sample Book", "This is some sample content.")
-    print(main(sample_book, [("display", "reverse"), ("serialize", "xml")]))
+    sample_book = Book(
+        "Sample Book",
+        "This is some sample content."
+    )
+    print(main(
+        sample_book,
+        [("display", "reverse"),
+         ("serialize", "xml")]
+    ))
